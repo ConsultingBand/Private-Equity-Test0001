@@ -237,8 +237,6 @@
     .leg-sq { width: 10px; height: 10px; border-radius: 3px; }
     .leg-ci { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--yellow); }
 
-    canvas { max-height: 360px; }
-
     /* TABLE */
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.79rem; }
@@ -333,29 +331,27 @@
       padding-left: 16px;
     }
 
-
-    /* ─── MOBILE CHART ─── */
-    .chart-scroll {
+    /* ─── RESPONSIVE CHART ─── */
+    .chart-canvas-wrap {
+      position: relative;
       width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .chart-scroll canvas {
-      min-width: 560px;
-      max-height: 340px;
+      height: 340px;
     }
     @media (max-width: 600px) {
-      .card-body { padding: 16px 12px 12px; }
-      .card-head { padding: 16px 16px 12px; }
+      .chart-canvas-wrap { height: 260px; }
+      .card-body { padding: 14px 12px 10px; }
+      .card-head { padding: 14px 16px 12px; flex-direction: column; gap: 10px; }
       .card-head h2 { font-size: 0.85rem; }
-      .card-head p { font-size: 0.65rem; }
-      .main { padding: 28px 12px 0; gap: 24px; }
-      .input-card { padding: 20px 16px; }
-      .hero-img-block { padding: 0 16px; margin-top: 24px; }
-      .intro-inner { padding: 16px; }
-      td, th { padding: 10px 12px; font-size: 0.72rem; }
-      .range-val { font-size: 1.8rem; min-width: 70px; }
-      input[type="number"] { font-size: 1.4rem; }
+      .card-head p  { font-size: 0.63rem; }
+      .legend       { gap: 10px; }
+      .main         { padding: 24px 12px 0; gap: 20px; }
+      .input-card   { padding: 20px 16px; }
+      .hero-img-block { padding: 0 16px; margin-top: 20px; }
+      .intro-inner  { padding: 14px 16px; }
+      .intro-text   { font-size: 0.76rem; }
+      td, th        { padding: 9px 12px; font-size: 0.72rem; }
+      .range-val    { font-size: 1.8rem; min-width: 65px; }
+      input[type="number"] { font-size: 1.4rem; padding: 10px 14px; }
     }
   </style>
 </head>
@@ -373,11 +369,9 @@
 <!-- ─── INTRO TEXT ─── -->
 <div class="intro-band">
   <div class="intro-inner">
-    <p class="intro-text">Bienvenue sur ce petit module de simulation d'investissement en Private Equity, effectué avec l'aide de Claude. Objectif: montrer comment faire un petit projet de démo pour voir comment l'IA peut devenir une aide précieuse dans des projets plus complexes alliant Data & Finance.</p>
+    <p class="intro-text">Test mené sur la simulation d'un investissement de private equity sur 12 ans. Code libre d'accès, servez-vous. L'objectif était de montrer que l'on peut rapidement créer une ébauche d'outils qui peut servir pour un projet plus vaste, plus complexe.</p>
   </div>
 </div>    <div>
-      <div class="topbar-title">Investissement Private Equity — Courbe en J</div>
-      <div class="topbar-sub">Simulation sur 12 ans · Appels, distributions, DPI</div>
     </div>
   </div>
 </div>
@@ -443,7 +437,7 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="chart-scroll">
+          <div class="chart-canvas-wrap">
             <canvas id="chart_main"></canvas>
           </div>
         </div>
@@ -584,6 +578,7 @@
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         interaction: {mode:'index', intersect:false},
         plugins: {
           legend: {display: false},
